@@ -1,0 +1,41 @@
+
+mod = 1000000007
+
+t = int(input())
+
+def pot(x, y, mod):
+    ret = 1
+
+    while(y != 0):
+        if(y%2 == 1):
+            ret *= x
+            ret %= mod
+
+        x *= x
+        x %= mod
+
+        y>>=1
+
+    return ret
+
+
+def gcd(a, b):
+    if(b == 0):
+        return a
+    return gcd(b, a%b)
+
+while t > 0:
+    arr = list(map(int, input().split()))
+    a = arr[0]
+    b = arr[1]
+    n = arr[2]
+
+    res = 0
+    if(a-b != 0):
+        res = gcd(pot(a, n, a-b) + pot(b, n, a-b), a-b)
+    else:
+        res = pot(a, n, mod) + pot(b, n, mod)
+
+    res %= mod
+    print(res)
+    t-=1
