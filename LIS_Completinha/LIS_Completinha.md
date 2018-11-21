@@ -6,7 +6,9 @@
 
     Binary Search: 
     
-    Problema x, y.   xi < xj and yi < yj: Sort x, then lis i < j and yi < yj. Comeco no ponto 0,0 e quero chegar no N,M, posso parar em lojas x, y tais que xi < xj and yi < yj.
+    Problema: vetor com n pares (x,y). De todas permutacoes escolher subsequencia maxima tal que se i < j entao xi < xj and yi < yj. Ordena por x, entao resolver lis 1d i < j e yi < yj. 
+    
+    Variacao: pessoa comeco no ponto (0,0) e quer chegar no (N,M), pode parar em lojas na posicao (x,y) tais que xi < xj and yi < yj, qual o numero maximo de lojas em que a pessoa pode passar?
 
 --------------------
 
