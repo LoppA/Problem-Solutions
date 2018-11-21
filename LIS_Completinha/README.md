@@ -1,3 +1,5 @@
+# LIS Completinha
+
 - Lis:
 
     Problema: https://www.spoj.com/EPU/problems/LIS/  Input: n na primeira linha (1 <= n <= 30000), dps n numeros descrevendo a sequencia (que cabem em um inteiro de 32 bits). Output: imprimir o valor da LIS.
