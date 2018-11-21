@@ -1,7 +1,6 @@
 -- Lis:
     -- Seg: 
     -- Binary Search: 
-
     -- Problema x, y.   xi < xj and yi < yj: Sort x, then lis i < j and yi < yj. Comeco no ponto 0,0 e quero chegar no N,M, posso parar em lojas x, y tais que xi < xj and yi < yj.
 
 -- Merge Tree:
