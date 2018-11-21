@@ -26,13 +26,19 @@
 
 - Lis2:
     X, Y, Z, Sort Z, then i < j and xi < xj and yi < yj
+
+    Problema: http://codeforces.com/gym/101055/problem/D
+
+    Mesmo problema mais restrito: https://www.spoj.com/problems/LIS2/
     
-    Seg2D: http://codeforces.com/gym/101055/problem/D
-    
-    Binary Search with Chain: https://www.spoj.com/problems/LIS2/
+    Seg2D: 
+
+    Binary Search with Chain: 
 
 --------------------
 
 - Mais seg2d: 
 
     Points and Rectangles: https://codeforces.com/gym/101964/problem/K
+
+    Solution:
