@@ -2,9 +2,9 @@
 
     Problema: https://www.spoj.com/EPU/problems/LIS/  Input: n na primeira linha (1 <= n <= 30000), dps n numeros descrevendo a sequencia (que cabem em um inteiro de 32 bits). Output: imprimir o valor da LIS.
 
-    Seg: 
+    Seg: https://github.com/LoppA/Problem-Solutions/blob/master/LIS_Completinha/LIS_1D_Seg.cpp
 
-    Binary Search: 
+    Binary Search: https://github.com/LoppA/Problem-Solutions/blob/master/LIS_Completinha/LIS_1D_BinarySearch.cpp
     
     Problema: vetor com n pares (x,y). De todas permutacoes escolher subsequencia maxima tal que se i < j entao xi < xj and yi < yj. Ordena por x, entao resolver lis 1d i < j e yi < yj. 
     
