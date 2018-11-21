@@ -15,8 +15,12 @@
 - Merge Tree:
 
     https://www.spoj.com/problems/KQUERYO/       versao do https://www.spoj.com/problems/KQUERY/ (da p resolver offline com seg normal) online
+
+    KQUERYO Solution: https://github.com/LoppA/Problem-Solutions/blob/master/LIS_Completinha/KQUERYO.cpp
     
     https://www.spoj.com/problems/MKTHNUM/
+
+    MKTHNUM Solution: https://github.com/LoppA/Problem-Solutions/blob/master/LIS_Completinha/MKTHNUM.cpp
 
 --------------------
 
