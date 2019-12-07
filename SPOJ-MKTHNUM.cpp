@@ -17,8 +17,7 @@ const int INF = 0x3f3f3f3f;
 const double PI = acos(-1.0);
 const double E = exp(1);
 
-const int N = 1e5 + 5;
-const int M = 7000000;
+const int N = 1e5+5, M = 2e6+6;
 int n, m;
 int a[N], d[N];
 
