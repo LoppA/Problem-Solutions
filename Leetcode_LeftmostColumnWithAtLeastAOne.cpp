@@ -13,25 +13,14 @@ public:
     int leftMostColumnWithOne(BinaryMatrix &binaryMatrix) {
       vector<int> dim = binaryMatrix.dimensions();
       int n = dim[0], m = dim[1];
+      int ans = m;
       
-      int bot = 0, top = m-1;
-      int ans = -1;
-      while(bot <= top) {
-        int mid = (bot+top)>>1;
-        
-        bool f = false;
-        for(int i = 0; i < n; i++) {
-          f |= binaryMatrix.get(i, mid) == 1;
-        }
-        
-        if(f) {
-          ans = mid;
-          top = mid-1;
-        } else {
-          bot = mid+1;
+      for(int i = 0; i < n; i++) {
+        while(ans > 0 and binaryMatrix.get(i, ans-1) == 1) {
+          ans--;
         }
       }
       
-      return ans;
+      return (ans == m ? -1 : ans);
     }
 };
