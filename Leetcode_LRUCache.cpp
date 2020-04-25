@@ -11,13 +11,10 @@ public:
       if(it == keyToList.end()) {
         return -1;
       }
-      
       LRU.erase(it->second.first);
       int value = it->second.second;
-      
       LRU.push_front(key);
       keyToList[key] = make_pair(LRU.begin(), value);
-      
       return value;
     }
     
