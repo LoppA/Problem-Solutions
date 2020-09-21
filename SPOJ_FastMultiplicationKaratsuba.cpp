@@ -74,7 +74,7 @@ inline vector<int> strToVec(const string &s) {
 }
  
 int main (void) {
-	ios_base::sync_with_stdio(false);
+  ios_base::sync_with_stdio(false);
  
   int T;  cin >> T;
   while(T--) {
@@ -101,5 +101,5 @@ int main (void) {
     cout << endl;
   }
  
-	return 0;
+  return 0;
 }
