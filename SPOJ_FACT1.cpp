@@ -1,5 +1,8 @@
 // https://www.spoj.com/problems/FACT1/
+
 #include <bits/stdc++.h>
+#include <limits.h>
+#include<boost/multiprecision/cpp_int.hpp>
 
 using namespace std;
 
@@ -8,6 +11,8 @@ using namespace std;
 #define mk make_pair
 #define fi first
 #define se second
+
+namespace mp=boost::multiprecision;
 
 typedef long long ll;
 typedef __int128 LL;
@@ -52,18 +57,9 @@ string printLL(LL x) {
 }
 
 LL mult(LL x, LL y, LL mod) {
-  LL r = 0;
-  x %= mod;
-  y %= mod;
-
-  while(y) {
-    if (y&1)
-      r = (x+r)%mod;
-    x = (x+x)%mod;
-    y >>= 1;
-  }
-
-  return r;
+  mp::int256_t r = x;
+  r = r*y%mod;
+  return (LL)r;
 }
 
 LL exp(LL x, ll y, LL mod) {
@@ -175,33 +171,26 @@ LL rho(const LL n, const ll x0=2, const ll c=1) {
 
 class Factor {
 private:
-  vector<pair<LL, int>> v;
+  map<LL, int> m;
   LL n;
 
-  void _factor(LL m) {
-    while(m != 1 and millerRabin(m) == false) {
-      LL d = m;
-      for (int c = 1; d == m; c++) {
-        d = rho(m, 2, c);
-      }
+  int x;
 
-      _factor(d);
+  void _factor(LL n) {
+    if (n == 1) return;
 
-      while(m%d == 0) {
-        m /= d;
-      }
+    if (millerRabin(n)) {
+      m[n]++;
+      return;
     }
 
-    if (m != 1) {
-      int cnt = 0;
-      while(n%m == 0) {
-        n /= m;
-        cnt++;
-      }
-      if (cnt) {
-        v.emplace_back(m, cnt);
-      }
+    LL d = n;
+    for (int c = 1; d == n; c++) {
+      d = rho(n, 2, c);
     }
+
+    _factor(d);
+    _factor(n/d);
   }
 
 public:
@@ -210,11 +199,13 @@ public:
   void factor() {
     _factor(n);
 
-    sort(v.begin(), v.end());
-
-    for (int i = 0; i < v.size(); i++) {
-      cout << printLL(v[i].fi) << "^" << v[i].se << " \n"[i == v.size()-1];
+    bool f = 0;
+    for (auto p : m) {
+      if (f)  cout << " ";
+      f = true;
+      cout << printLL(p.fi) << "^" << p.se;
     }
+    cout << endl;
   }
 
 };
