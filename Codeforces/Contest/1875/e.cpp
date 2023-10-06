@@ -190,7 +190,7 @@ int go() {
 }
 
 int main (void) {
-	ios_base::sync_with_stdio(false);
+  ios_base::sync_with_stdio(false);
 
   build();
 
@@ -199,6 +199,6 @@ int main (void) {
     cout << go() << endl;
   }
 
-	return 0;
+  return 0;
 }
 
