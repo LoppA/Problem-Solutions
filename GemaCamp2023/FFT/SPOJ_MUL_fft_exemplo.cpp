@@ -1,5 +1,18 @@
 // https://www.spoj.com/problems/MUL/
 // Implementacao mais facil de entender, sacrificando otimizacoes por legibilidade
+
+
+/*
+Transformar os numeros em polinomio. O digito da i-esima casa decimal vira o
+i-esimo coeficiente
+
+Para um numero -> d3|d2|d1|d0
+O polinomio sera d3*x^3 + d2*x^2 + d1*x^1 + d0*x^0 
+
+Multiplicando os polinomios 2 nos da o resultado, agora basta apenas
+carregar as dezenas para a esquerda e retornar a respota
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;

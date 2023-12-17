@@ -1,4 +1,99 @@
 // https://codeforces.com/problemset/problem/528/D
+
+
+/*
+
+Para cada letra A, T, C, G. Vamos ver se existe um match para essa letra em i
+
+Calculando para a letra C.
+
+  Passo 1:
+Se existe C em s[i], marcamos em que C chega entre [i-k, i+k].
+Criamos um vetor v em que v[i] = 1 se C chega em i, e 0 caso contrario.
+Para AGCAATTCAT e k = 1
+     0111001110
+
+Essa parte pode ser feita com eventos
+
+  Passo 2:
+Transformamos a string T em um vetor u de boleanos tambem.
+Se T[i] = C, u[i] = 1. Caso contrario u[i] = 0
+Para CATC
+u = 1001
+
+  Passo 3:
+Temos um match da letra C na posicao i, se o vetor u eh uma submask de tamanho size(u)
+em v comecando em i.
+
+0111001110 Sem match
+1001
+
+0111001110 Sem match
+ 1001
+
+0111001110 Sem match
+  1001
+
+0111001110 MATCH
+   1001
+
+Outro exemplo:
+01110 MATCH
+ 101
+
+  Usando multiplicacao de polinomios:
+
+v = 0111001110
+u = 110
+
+Para verificar se temos um match na primeira substring,
+precisamos fazer u[0]*v[0] + u[1]*v[1] + u[2]*v[2]
+
+v = 0111001110
+    |||
+u = 110
+
+Se ui e vi forem os coeficientes de polinomios Pu e Pv,
+teremos no primeiro caso:
+(u[0]*v[0])*x^0 + (u[1]*v[1])*x^1 + (u[2]*v[2])*x^2
+
+Os valores estao espalhados pelo polinomio!!
+
+Precisamos que u[0]*v[0] + u[1]*v[1] + u[2]*v[2] estejam em um mesmo x^k
+
+O que acontece se invertermos u = u`
+
+v  = 0111001110
+     \|/
+      X
+     /|\
+u` = 011
+
+u[0]*v[0] + u[1]*v[1] + u[2]*v[2] = u`[2]*v[0] + u`[1]*v[1] + u`[0]*v[2]
+
+Todos os valores caem no mesmo expoente x^k!
+(u`[2]*v[0] + u`[1]*v[1] + u`[0]*v[2])*x^2
+
+Para o proximo subarray:
+
+v  = 0111001110
+      \|/
+       X
+      /|\
+u` =  011
+
+u`[2]*v[1] + u`[1]*v[2] + u`[0]*v[3] vai cair no expoent x^3
+
+
+Para saber se temos um match com o character C para cada subarray:
+Multiplicamos v com o inverso de u
+
+Temos um match das strings S e T em um determinado na posicao i
+se ha match com todas as letras A, T, C, G na posicao i
+
+*/
+
+
 #include <bits/stdc++.h>
 
 using namespace std;

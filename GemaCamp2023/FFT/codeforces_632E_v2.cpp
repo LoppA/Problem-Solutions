@@ -1,5 +1,12 @@
 // ESSE NAO PASSA PARA K GRANDE
 // PROBLEMA DE PRECISAO COM O DOUBLE, VALORES EXPLODEM E QUEBRAM O DOUBLE 
+/*
+
+Usando a otimizacao discutida na aula nao funciona com NTT.
+Essa otimizacao funciona para NTT (fft com numeroes interios module P)
+ja que nao temos problemas de precisao.
+
+*/
 #include <bits/stdc++.h>
 
 using namespace std;

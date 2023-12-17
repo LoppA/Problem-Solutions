@@ -1,4 +1,49 @@
 // https://codeforces.com/problemset/problem/632/E
+
+/*
+
+Mais um problema de formas de escolher valores em uma lista e chegar em somas
+
+Dessa vez eh a variacao c da aula:
+
+Transformando a lista de boleanos has[val] em polinomio de coeficientes 0 ou 1 has[val]*x^val
+
+a -> Pa
+
+Pr = 1
+for k:
+  Pr *= Pa
+
+Resposta sao todos os valores i em que coef[i] > 0 em coef[i]*x^i no polinomio Pr.
+
+** 2 problemas em resolver desse jeito **
+1. Pr dobra de tamanha a cada multiplicacao
+  Podemos dar resize em Pr.
+  Sabemos que o valor maximo da resposta eh 1e6 = 1000*1000, entao esse deve
+  ser o valor maximo de Pr
+2. Agora temos a complexidade K * size(Pr) * log2(size(pr))
+    1e3 * 1e6 * 20 = 2e10
+    2e10 eh muito para 5 segundos!
+
+O que estamos fazendo aqui?
+  Multiplicando Pa k vezes
+  Isso eh exponenciacao
+
+Pr = Pa^k
+
+Podemos usar exponenciacao rapida!
+
+Pr = fast_exp(Pa, k)
+
+A resposta vai ser todas as posicoes com coeficientes > 0
+
+Depois de cada multiplicacao de polinomio podemos transformar os coeficientes
+do resultado em 0 e 1 para garantir uma precisa melhor. Porque nao queremos
+contar de quantas formas diferentes nos conseguimos chegar a uma soma e sim
+se conseguimos (true=1) ou nao (false=0) chegar a uma soma.
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
