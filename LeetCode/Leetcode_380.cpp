@@ -1,45 +1,37 @@
 // https://leetcode.com/problems/insert-delete-getrandom-o1/
 class RandomizedSet {
-  static const int N = 2e5 + 5;
-  int v[N];
-  int n;
+  vector<int> v;
   unordered_map<int, int> id;
 public:
-    RandomizedSet() {
-      n = 0;
-    }
-    
+    RandomizedSet() {}
+
     bool insert(int val) {
       if (id.count(val)) {
         return false;
       }
-      int i = n++;
-      id[val] = i;
-      v[i] = val;
+      id[val] = v.size();
+      v.push_back(val);
       return true;
     }
-    
+
     bool remove(int val) {
       if (!id.count(val)) {
         return false;
       }
-      
+
       int i = id[val];
-      id.erase(val);
-      n--;
-      
-      if (i == n) {
-        return true;
-      }
-      v[i] = v[n];
+      v[i] = v.back();
       id[v[i]] = i;
-      
+
+      v.pop_back();
+      id.erase(val);
+
       return true;
     }
-    
+
     int getRandom() {
-      assert(n);
-      int i = random()%n;
+      assert(!v.empty());
+      int i = random()%v.size();
       return v[i];
     }
 };
