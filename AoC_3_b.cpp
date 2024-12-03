@@ -43,8 +43,6 @@ ll go(string s) {
 	const string r_off = "don't\\(\\)";
 	regex r(r_mul + "|" + r_on + "|" + r_off);
 
-	cout << r_on << endl;
-
 	bool enabled = true;
 	ll ans = 0;
 	sregex_iterator reg_beg = sregex_iterator(s.begin(), s.end(), r);
