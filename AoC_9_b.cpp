@@ -115,13 +115,7 @@ ll process(const string &S) {
 	for (auto it : res) {
 		int i, n, id;
 		tie(i, n, id) = it;
-
-		ll j = i;
-		while(n--) {
-			ans += j*id;
-			assert(ans >= 0);
-			j++;
-		}
+		ans += (ll)id*i*n + ((ll)id*((ll)n*(n-1))>>1);
 	}
 
 	return ans;
