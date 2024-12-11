@@ -28,11 +28,14 @@ ll go(ll x, int y = 25) {
 
 	pair<ll, int> p(x, y);
 	if (dp.count(p)) {
+		assert(dp[p] > 0);
 		return dp[p];
 	}
 
+	ll &ret = dp[p];
+
 	if (x == 0) {
-		return dp[p] = go(1, y-1);
+		return ret = go(1, y-1);
 	}
 	if (d%2 == 0) {
 		d /= 2;
@@ -41,13 +44,13 @@ ll go(ll x, int y = 25) {
 
 		while(d--) {
 			r += base*(l%10);
-			base *= 10
+			base *= 10;
 			l /= 10;
 		}
-		return dp[p] = go(l, y-1) + go(r, y-1);
+		return ret = go(l, y-1) + go(r, y-1);
 	}
 
-	return dp[p] = go(x*2024, y-1);
+	return ret = go(x*2024, y-1);
 }
 
 int main (void) {
