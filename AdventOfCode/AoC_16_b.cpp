@@ -15,17 +15,10 @@ typedef tuple<int, int, int> iii;
 const int INF = 0x3f3f3f3f;
 const double PI = acos(-1.0);
 
-int dir[4][2] = {
-    {0, 1},
-    {-1, 0},
-    {0, -1},
-    {1, 0},
-};
 vector<string> g;
 int n, m;
-map<iii, int> dist[2];
 
-void dij(map<iii, int> &dist, iii st, bool f = false) {
+void dij(map<iii, int> &dist, iii st, int dir[4][2], bool f = false) {
     priority_queue<
         pair<int, iii>,
         vector<pair<int, iii>>, 
@@ -107,7 +100,15 @@ int go() {
         }
     }
 
-    dij(dist[0], iii(a.fi, a.se, 0));
+    map<iii, int> dist[2];
+    int dir[4][2] = {
+        {0, 1},
+        {-1, 0},
+        {0, -1},
+        {1, 0},
+    };
+
+    dij(dist[0], iii(a.fi, a.se, 0), dir);
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 2; j++) {
             dir[i][j] *= -1;
@@ -118,7 +119,7 @@ int go() {
         assert(dist[0].count(iii(b.fi, b.se, d)));
         ab = min(ab, dist[0][iii(b.fi, b.se, d)]);
     }
-    dij(dist[1], iii(b.fi, b.se, 0), true);
+    dij(dist[1], iii(b.fi, b.se, 0), dir, true);
 
     assert(ab == dist[1][iii(a.fi, a.se, 0)]);
 
