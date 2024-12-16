@@ -92,17 +92,6 @@ void dij(map<iii, int> &dist, iii st, bool f = false) {
     }
 }
 
-int get_dist(map<iii, int> &dist, int i, int j) {
-    if (!dist.count(iii(i, j, 0))) {
-        return -1;
-    }
-    int ret = dist[iii(i, j, 0)];
-    for (int k = 1; k < 4; k++) {
-        ret = min(ret, dist[iii(i, j, k)]);
-    }
-    return ret;
-}
-
 int go() {
     n  = g.size();
     m  = g[0].size();
@@ -124,7 +113,11 @@ int go() {
             dir[i][j] *= -1;
         }
     }
-    int ab = get_dist(dist[0], b.fi, b.se);
+    int ab = dist[0][iii(b.fi, b.se, 0)];
+    for (int d = 0; d < 4; d++) {
+        assert(dist[0].count(iii(b.fi, b.se, d)));
+        ab = min(ab, dist[0][iii(b.fi, b.se, d)]);
+    }
     dij(dist[1], iii(b.fi, b.se, 0), true);
 
     assert(ab == dist[1][iii(a.fi, a.se, 0)]);
