@@ -22,7 +22,6 @@ const vector<int> v = {2,4,1,5,7,5,0,3,1,6,4,3,5,5,3,0};
 ll go(int A, int i) {
     if (i == (int)v.size()) {
         if (!A) {
-            cout << "A " << A << " " << i << endl;
             return 0;
         } else {
             return -2;
