@@ -14,7 +14,7 @@ typedef pair<int, int> ii;
 const int INF = 0x3f3f3f3f;
 const double PI = acos(-1.0);
 
-void print(int x) {
+void print(ll x) {
     string s;
 
     while(x) {
@@ -29,8 +29,8 @@ void print(int x) {
 int main (void) {
 	ios_base::sync_with_stdio(false);
 
-    int A;
-    int B = 0, C = 0;
+    ll A;
+    ll B = 0, C = 0;
     cin >> A;
 
     print(A);
