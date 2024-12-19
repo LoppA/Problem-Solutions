@@ -67,8 +67,8 @@ int go(const string &s, int i) {
     r = false;
 
     for (const string& t : v) {
-        if (check(s, t, i)) {
-            r |= go(s, i+t.size());
+        if (check(s, t, i) && go(s, i+t.size())) {
+            return r = true;
         }
     }
 
