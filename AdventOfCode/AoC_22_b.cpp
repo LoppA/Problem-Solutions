@@ -45,14 +45,14 @@ int main (void) {
 
     ll x;
     while(cin >> x) {
-        set<int> vis;
+        vector<int> vis(N, false);
         vector<int> v(4);
         int i = 0;
         for (; i < 4; i++) {
             v[i] = go(x);
         }
         int h = hsh(v);
-        vis.insert(h);
+        vis[h] = true;
         cnt[h] += x%10;
 
         for (; i < 2000; i++) {
@@ -61,8 +61,8 @@ int main (void) {
             v[2] = v[3];
             v[3] = go(x);
             h = hsh(v);
-            if (!vis.count(h)) {
-                vis.insert(h);
+            if (!vis[h]) {
+                vis[h] = true;
                 cnt[h] += x%10;
             }
         }
