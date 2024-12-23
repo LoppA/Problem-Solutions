@@ -69,32 +69,34 @@ inline bool check(const string &u) {
     return true;
 }
 
-int go(int i = 0, int target = -1) {
+vector<string> res;
+
+void go(int i = 0) {
     assert((int)curr.size() <= 83); // Max possible
     if (i >= (int)nodes.size()) {
-        if ((int)curr.size() == target) {
-            for (int j = 0; j < (int)curr.size(); j++) {
-                cout << curr[j] << (j == (int)curr.size()-1 ? '\n' : ',');
-            }
+        if (curr.size() > res.size()) {
+            res = curr;
         }
-        return curr.size();
+        return;
     }
 
-    int r = 0;
     if (check(nodes[i])) {
         curr.push_back(nodes[i]);
-        r = go(i+1, target);
+        go(i+1);
         curr.pop_back();
     }
 
-    return max(go(i+1, target), r);
+    go(i+1);
 }
 
 int main (void) {
 	ios_base::sync_with_stdio(false);
 
     read();
-    go(0, go());
+    go();
+    for (int i = 0; i < (int)res.size(); i++) {
+        cout << res[i] << (i == (int)res.size()-1 ? '\n' : ',');
+    }
 
-	return 0;
+    return 0;
 }
