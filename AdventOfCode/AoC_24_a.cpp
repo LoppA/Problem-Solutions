@@ -20,51 +20,45 @@ map<string, function<bool(bool, bool)>> opMap = {
     { "XOR", [](bool a, bool b) -> bool { return a^b; } },
 };
 
-struct Wire;
-
-struct Oper;
-
 struct Wire {
-    variant<bool, Oper*> value;
+    using Formula = tuple<string, Wire*, Wire*>;
+
+    string label;
+    variant<bool, Formula> value;
+    queue<Wire*> ch;
 
     Wire() {}
 
-    Wire(bool val) : value(val) {}
-    Wire(Oper *o) : value(o) {}
-};
+    Wire(string label) : label(label) {}
+    Wire(string label, bool val) : label(label), value(val) {}
+    Wire(string label, Formula f) : label(label), value(f) {}
 
-struct Oper {
-    string op;
-    using Par = variant<string, bool>;
-    pair<Par, Par> par;
-
-    Oper() {}
-
-    Oper(string op, string l, string r) : op(op), par(l, r) {}
-
-    bool solve(const string& p, bool val, bool &res) {
-        if (par.fi.index() == 0 && get<string>(par.fi) == p) {
-            par.fi = val;
-        } else if (par.se.index() == 0 && get<string>(par.se) == p) {
-            par.se = val;
+    bool solve() {
+        if (value.index() == 0) {
+            return get<bool>(value);
         }
-        if (par.fi.index() == 1 && par.se.index() == 1) {
-            res = opMap[op](get<bool>(par.fi), get<bool>(par.se));
+
+        Formula f = get<Formula>(value);
+        string op;
+        Wire *L, *R;
+        tie(op, L, R) = f;
+
+        if (L->value.index() == 0 && R->value.index() == 0) {
+            this->value = opMap[op](get<bool>(L->value), get<bool>(R->value));
             return true;
         }
         return false;
     }
 };
 
-map<string, Wire> wire;
-map<string, queue<string>> ch;
+map<string, Wire*> wire;
 
 void read() {
     string line;
     while(getline(cin, line) && !line.empty()) {
         string u = line.substr(0, 3);
         bool val = line.back() == '1';
-        wire[u] = Wire(val);
+        wire[u] = new Wire(u, val);
     }
 
     int i = 0;
@@ -84,11 +78,11 @@ void read() {
         return ret;
     };
 
-    auto addCh = [](const string& p, const string& c) -> void {
-        if (!ch.count(p)) {
-            ch[p] = {};
+    auto addWire = [](const string &s) -> void {
+        if (wire.count(s)) {
+            return;
         }
-        ch[p].push(c);
+        wire[s] = new Wire(s);
     };
 
     while(getline(cin, line)) {
@@ -98,44 +92,44 @@ void read() {
         string v = parse(line, i);
         string r = parse(line, i);
 
-        Oper *o = new Oper(op, u, v);
-        wire[r] = Wire(o);
-        addCh(u, r);
-        addCh(v, r);
+        addWire(u);
+        addWire(v);
+        addWire(r);
+
+        wire[r]->value = Wire::Formula(op, wire[u], wire[v]);
+        wire[u]->ch.push(wire[r]);
+        wire[v]->ch.push(wire[r]);
     }
 }
 
 ll go() {
-    queue<string> q;
+    queue<Wire*> q;
     for (const auto &it : wire) {
-        const auto &val = it.se.value;
+        const auto &val = it.se->value;
         if (val.index() == 0) {
-            q.push(it.fi);
+            q.push(it.se);
         }
     }
 
     set<string> z;
 
     while(q.size()) {
-        string u = q.front();
-        bool val = get<bool>(wire[u].value);
+        Wire *u = q.front();
         q.pop();
         
-        cout << u << " " << val << endl;
+        // cout << u->label << " " << get<bool>(u->value) << endl;
 
-        if (u[0] == 'z') {
-            z.insert(u);
+        if (u->label[0] == 'z') {
+            z.insert(u->label);
         }
 
-        queue<string> &chs = ch[u];
-        while(chs.size()) {
-            string v = chs.front();
-            chs.pop();
+        queue<Wire*> &ch = u->ch;
+        while(ch.size()) {
+            Wire *v = ch.front();
+            ch.pop();
 
-            bool res;
-            if (get<Oper*>(wire[v].value)->solve(u, val, res)) {
+            if (v->solve()) {
                 q.push(v);
-                wire[v].value = res;
             }
         }
     }
@@ -143,17 +137,17 @@ ll go() {
     ll ans = 0;
     for (auto it = z.rbegin(); it != z.rend(); ++it) {
         const string &u = *it;
-        ans = (ans<<1) + get<bool>(wire[u].value);
+        ans = (ans<<1) + get<bool>(wire[u]->value);
     }
 
     return ans;
 }
 
 int main (void) {
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     read();
     cout << go() << endl;
 
-	return 0;
+    return 0;
 }
