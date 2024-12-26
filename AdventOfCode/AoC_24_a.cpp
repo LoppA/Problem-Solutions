@@ -33,9 +33,13 @@ struct Wire {
     Wire(string label, bool val) : label(label), value(val) {}
     Wire(string label, Formula f) : label(label), value(f) {}
 
+    bool getValue() {
+        return get<bool>(value);
+    }
+
     bool solve() {
         if (value.index() == 0) {
-            return get<bool>(value);
+            return this->getValue();
         }
 
         Formula f = get<Formula>(value);
@@ -44,7 +48,7 @@ struct Wire {
         tie(op, L, R) = f;
 
         if (L->value.index() == 0 && R->value.index() == 0) {
-            this->value = opMap[op](get<bool>(L->value), get<bool>(R->value));
+            this->value = opMap[op](L->getValue(), R->getValue());
             return true;
         }
         return false;
@@ -61,7 +65,6 @@ void read() {
         wire[u] = new Wire(u, val);
     }
 
-    int i = 0;
     auto parse = [](string s, int &i) -> string {
         int n = s.size();
         string ret;
@@ -86,7 +89,7 @@ void read() {
     };
 
     while(getline(cin, line)) {
-        i = 0;
+        int i = 0;
         string u = parse(line, i);
         string op = parse(line, i);
         string v = parse(line, i);
@@ -111,7 +114,10 @@ ll go() {
         }
     }
 
-    set<string> z;
+    auto cmp = [](Wire *a, Wire *b) {
+        return a->label > b->label;
+    };
+    set<Wire*, decltype(cmp)> z(cmp);
 
     while(q.size()) {
         Wire *u = q.front();
@@ -120,7 +126,7 @@ ll go() {
         // cout << u->label << " " << get<bool>(u->value) << endl;
 
         if (u->label[0] == 'z') {
-            z.insert(u->label);
+            z.insert(u);
         }
 
         queue<Wire*> &ch = u->ch;
@@ -135,9 +141,8 @@ ll go() {
     }
 
     ll ans = 0;
-    for (auto it = z.rbegin(); it != z.rend(); ++it) {
-        const string &u = *it;
-        ans = (ans<<1) + get<bool>(wire[u]->value);
+    for (auto w : z) {
+        ans = (ans<<1) + w->getValue();
     }
 
     return ans;
